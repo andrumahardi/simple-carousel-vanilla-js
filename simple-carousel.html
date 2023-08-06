@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <div>
+        <div class="carousel-container">
+          <button class="carousel-btn" onclick="prev()">
+            <p><</p>
+          </button>
+          <button class="carousel-btn next" onclick="next()">
+            <p>></p>
+          </button>
+          <div class="carousel" id="carousel">
+            <div class="carousel-items">
+              <div>
+                <img
+                  src="https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/v1016-c-08_1-ksh6mza3.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=f584d8501c27c5f649bc2cfce50705c0"
+                  alt="background 1"
+                  width="1080px"
+                  height="512px"
+                />
+              </div>
+              <div>
+                <img
+                  src="https://wallpaperaccess.com/full/48074.jpg"
+                  alt="background 2"
+                  width="1080px"
+                  height="512px"
+                />
+              </div>
+              <div>
+                <img
+                  src="https://as1.ftcdn.net/v2/jpg/00/98/29/24/1000_F_98292492_koq3pibSWZNK2xNmJnZkJbkvfrUnvOKW.jpg"
+                  alt="background 3"
+                  width="1080px"
+                  height="512px"
+                />
+              </div>
+              <div>
+                <img
+                  src="https://as2.ftcdn.net/v2/jpg/03/42/12/47/1000_F_342124785_yEvYSFgPmYWygLTHAbvgK32hmB1qMMTB.jpg"
+                  alt="background 4"
+                  width="1080px"
+                  height="512px"
+                />
+              </div>
+              <div>
+                <img
+                  src="https://img.lovepik.com/background/20211022/large/lovepik-purple-gradient-abstract-background-image_401727440.jpg"
+                  alt="background 5"
+                  width="1080px"
+                  height="512px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-index-wrapper" id="index-wrapper">
+          <span class="carousel-indexes active"></span>
+          <span class="carousel-indexes"></span>
+          <span class="carousel-indexes"></span>
+          <span class="carousel-indexes"></span>
+          <span class="carousel-indexes"></span>
+        </div>
+      </div>
+    </main>
+  </body>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+    }
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+    }
+    .carousel-container {
+      position: relative;
+      width: 1080px;
+    }
+    .carousel {
+      overflow: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+    }
+    .carousel-items {
+      display: flex;
+      gap: 10px;
+    }
+    .carousel-items > div {
+      scroll-snap-align: start;
+    }
+    .carousel-items img {
+      object-fit: cover;
+    }
+    .carousel-btn {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      font-size: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff6b;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 50px #0000009e;
+      margin: 0 10px;
+      top: 50%;
+      border: none;
+      cursor: pointer;
+      color: #d1d1d191;
+    }
+    .carousel-btn.next {
+      right: 0;
+    }
+    .carousel-index-wrapper {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      padding: 20px;
+    }
+    .carousel-indexes {
+      transition: all .5s;
+      width: 10px;
+      height: 10px;
+      background: #7b7b7b87;
+      border-radius: 50%;
+      display: block;
+    }
+    .carousel-indexes.active {
+      background: black;
+      width: 30px;
+      border-radius: 10px;
+    }
+  </style>
+  <script>
+    const carousel = document.getElementById("carousel");
+    const [carouselItem] = document.getElementsByClassName("carousel-items");
+    const items = Array.from(
+      document.querySelectorAll(".carousel-items > div") || []
+    );
+    const indexWrapper = document.getElementById("index-wrapper");
+    let index = 0;
+
+    setInterval(() => {
+      if (index === items.length) {
+        backToBeginning();
+      } else next();
+    }, 3000);
+
+    function prev() {
+      if (index > 0) {
+        indexWrapper.children[index].classList.remove("active");
+        indexWrapper.children[index - 1].classList.add("active");
+        carousel.scrollLeft -= carouselItem.scrollWidth / items.length;
+        index--;
+      }
+    }
+
+    function next() {
+      indexWrapper.children[index].classList.remove("active");
+      if (index + 1 < items.length) {
+        indexWrapper.children[index + 1].classList.add("active");
+        carousel.scrollLeft += carouselItem.scrollWidth / items.length;
+        index++;
+      } else backToBeginning();
+    }
+
+    function backToBeginning() {
+      index = 0;
+      carousel.scrollLeft = 0;
+      indexWrapper.children[index].classList.add("active");
+    }
+  </script>
+</html>
